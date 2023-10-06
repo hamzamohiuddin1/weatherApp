@@ -1,4 +1,5 @@
 import './assets/style.css';
+import Logo from './assets/images/logo.png'
 
 const URL = 'http://api.weatherapi.com/v1/forecast.json?key=0512e4ab4e7644bb96901409230210&q=London&days=7&aqi=no&alerts=no'
 
@@ -36,7 +37,7 @@ const requestHandler = (() => {
 
 const displayHandler = (() => {
     let mode = 'F';
-    let location = 'london';
+    let location = 'London';
     const dt = new Date();
     const cd = dt.getDay();
     const dayMap = {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday',
@@ -46,6 +47,7 @@ const displayHandler = (() => {
         displayHandler.displayCells(displayHandler.mode, displayHandler.location);
         displayHandler.displayLocationForm();
         displayHandler.displayToggleForm();
+        displayHandler.displayHeader();
     };
     const generateCell = async function (day, mode, query) {
         const cell = document.createElement('div');
@@ -66,7 +68,7 @@ const displayHandler = (() => {
         for(let i=0;i<24;i++) {
             let li = document.createElement('li');
             li.classList.add('forecastItem');
-            li.textContent = `${data[i]}º ${mode}`;
+            li.textContent = `${data[i]}º`;
             forecast.appendChild(li);
         }
         cell.appendChild(forecast);
@@ -103,6 +105,8 @@ const displayHandler = (() => {
             newWrapper.appendChild(cell);
         }
         wrapper.replaceWith(newWrapper);
+
+        
     };
 
     const displayLocationForm = () => {
@@ -131,8 +135,15 @@ const displayHandler = (() => {
         }
         
     }
+
+    const displayHeader = () => {
+        const logo = document.querySelector('.left>img');
+        logo.src = Logo;
+        const locationDisplay = document.querySelector('.locationDisplay');
+        locationDisplay.textContent = `Displaying forecast for: ${displayHandler.location} in º${displayHandler.mode}`;
+    }
     
-    return {displayAll, generateCell, displayCells, displayLocationForm, generateFirstCell, displayToggleForm, mode, location};
+    return {displayAll, generateCell, displayCells, displayLocationForm, generateFirstCell, displayToggleForm, displayHeader, mode, location};
 })();
 
 class locationForm {
@@ -154,6 +165,12 @@ class locationForm {
         form.setAttribute("method", "post");
         form.setAttribute("action", "submit.php");
         form.classList.add('locationform');
+
+        //create label
+        let label = document.createElement('label');
+        label.setAttribute('for', 'location');
+        label.textContent = 'Search weekly forecast\n ';
+
         //create input element for todo title
         let LOCATION = document.createElement("input");
         LOCATION.setAttribute("type", "text");
@@ -164,12 +181,12 @@ class locationForm {
         let s = document.createElement("input");
         s.setAttribute("type", "button");
         s.setAttribute("name", "button");
-        s.setAttribute("value", "Submit");
+        s.setAttribute("value", "Search forecast");
         s.addEventListener("click", function (e) {
             displayHandler.location = this.form.location.value;
             displayHandler.displayAll(displayHandler.mode, displayHandler.location);
         });
-
+        form.appendChild(label);
         form.appendChild(LOCATION);
         form.appendChild(s);
         return form;
@@ -198,7 +215,7 @@ class toggleForm {
         let s = document.createElement("input");
         s.setAttribute("type", "button");
         s.setAttribute("name", "button");
-        s.setAttribute("value", "Submit");
+        s.setAttribute("value", "Toggle ºC - ºF");
         s.addEventListener("click", function (e) {
             if(displayHandler.mode == 'F'){
                 displayHandler.mode = 'C';

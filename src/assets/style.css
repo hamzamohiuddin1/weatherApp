@@ -1,8 +1,9 @@
 body {
+    background-image: linear-gradient(cornflowerblue, lightblue); 
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 16.7vh 76.6vh 6.7vh;
+    grid-template-rows: 16.7vh 83.3vh;
     grid-template-columns: 16.7vw 83.3vw;
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -15,17 +16,53 @@ body {
 }
 
 #header {
+    position: sticky;
     display: flex;
-    background-color: antiquewhite;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(128,128,128,.5);
     grid-area: 1 / 1 / 2 / -1;
+}
+
+.left {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+}
+.left>img {
+    margin: 15px;
+    max-height: 100px;
+}
+
+.right {
+    margin: 30px;
+}
+
+#sidebar {
+    background-color: rgb(128,128,128,.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.locationform {
+    display: flex;
+    flex-direction: column;
 }
 
 #cells {
     flex: 1;
     display: flex;
     justify-content: flex-start;
-    gap: 20px;
+    gap: 3px;
     padding-right: 8%;
+}
+
+.cell:nth-child(2) {
+    background-color: rgb(211,211,211,.3);
 }
 
 .cell {
@@ -34,12 +71,64 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: none;
+    padding-top: 10px;
 }
 
+.cellHeader {
+    font-weight: bold;
+    font-size: 22px;
+}
 
 ul {
     list-style-type: none;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 3px;
+}
+
+li {
+    position: relative;
+    right: 18px;
+}
+.locationform {
+    display:flex;
+    flex-direction: column;
+    gap: 5px;
+    align-self: center;
+}
+.locationform>label {
+    font-weight: bold;
+    align-self: center;
+}
+.locationform>input[type='text'] {
+    width: 200px;
+    background-color: lightgray;
+    border-radius: 5px;
+    outline:none;
+    border: none;
+}
+.locationform>input[type='button'] {
+    background-color:lightslategray;
+    border: none;
+    outline: none;
+    width: 150px;
+    align-self: center;
+}
+
+.toggleform {
+    align-self: center;
+}
+.toggleform>input {
+    background-color: cornflowerblue;
+    height: 40px;
+    width: 100px;
+    border: none;
+    outline: none;
+}
+
+#footer {
+    background-color: rgb(128,128,128,.5);
+    grid-area: 2 / 0 / -1 / -1;
 }
